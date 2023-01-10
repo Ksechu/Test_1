@@ -13,9 +13,9 @@ function boot() {
     background: WHITE,
   });
   
-  document.body.appendChild(app.view);
+  var renderer = PIXI.autoDetectRenderer(620, 380);
 
-  // const square = new PIXI.Graphics();
+  document.body.appendChild(app.view);
 
   let grid = new Grid(7, M, 0, 0);
 
@@ -31,9 +31,9 @@ function boot() {
   app.stage.addChild(grid2);
 
 
-  let line1 = new Line_horizontal(3*M,4*M);
+  let line1 = new HorizontalLine(3*M,4*M);
 
-  line1.position.set(500, 100);
+  line1.position.set(300, 320, true);
 
   app.stage.addChild(line1);
 }
