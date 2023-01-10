@@ -7,8 +7,16 @@ class HorizontalLine extends PIXI.Graphics {
 
       this.rect = new PIXI.Graphics();
 
-      this.draw();
-      this.addChild(this.rect);       
+      this.draw();      
+
+      this.rect.interactive = tf;
+      this.rect.cursor = 'pointer'; 
+
+      this.rect.on('mousemove', function (e) {
+        console.log('Dragging');
+      });
+
+      this.addChild(this.rect); 
     }
 
     draw() {

@@ -12,8 +12,6 @@ function boot() {
     backgroundAlpha: 1,
     background: WHITE,
   });
-  
-  var renderer = PIXI.autoDetectRenderer(620, 380);
 
   document.body.appendChild(app.view);
 
