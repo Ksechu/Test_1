@@ -1,4 +1,4 @@
-class HorizontalLine extends PIXI.Graphics {
+class VerticalLine extends PIXI.Graphics {
     constructor(x, y, interactive) {
       super();
 
@@ -7,10 +7,10 @@ class HorizontalLine extends PIXI.Graphics {
 
       this.interactive = interactive;
       this.cursor = 'pointer'; 
-      this.hitArea = new PIXI.Rectangle(0, 0, CELL_SIZE, 5)
+      this.hitArea = new PIXI.Rectangle(0, 0, 5, CELL_SIZE)
 
       this.on('pointermove', function (e) {
-        console.log('HorizontalLine');
+        console.log('VerticalLine');
       });
       
       this.draw();
@@ -20,6 +20,6 @@ class HorizontalLine extends PIXI.Graphics {
       this.lineStyle(5, BLACK, 1);
 
       this.moveTo(0, 0);
-      this.lineTo(CELL_SIZE, 0);
+      this.lineTo(0, CELL_SIZE);
     }
 }

@@ -1,10 +1,14 @@
 class Grid extends PIXI.Container {
-    constructor(n, m, topLeftX, topLeftY) {
+    constructor(topLeftX, topLeftY, n, cellSize) {
       super();
+
+      this.x = topLeftX
+      this.y = topLeftY;
+
       this.n = n;
-      this.m = m;
-      this.topLeftX = topLeftX
-      this.topLeftY = topLeftY;
+
+      this.gridSize = this.n * cellSize;
+      this.cellSize = cellSize;
 
       this.rect = new PIXI.Graphics();
 
@@ -14,22 +18,20 @@ class Grid extends PIXI.Container {
 
     draw() {
       
-      let nm = this.n * this.m;
-
       this.rect.beginFill(GREY);
-      this.rect.drawRect(this.topLeftX, this.topLeftY, nm, nm);
+      this.rect.drawRect(0, 0, this.gridSize, this.gridSize);
       this.rect.endFill();
 
       this.rect.lineStyle(1, BLUE, 0.5);
 
       for (let i = 0; i <= this.n; i++) {
-        this.rect.moveTo(this.topLeftX + i * this.m, this.topLeftY);
-        this.rect.lineTo(this.topLeftX + i * this.m, this.topLeftY + nm);
+        this.rect.moveTo(i * this.cellSize, 0);
+        this.rect.lineTo(i * this.cellSize, this.gridSize);
       }
 
       for (let j = 0; j <= this.n; j++) {
-        this.rect.moveTo(this.topLeftX, this.topLeftY + j * this.m);
-        this.rect.lineTo(this.topLeftX + nm, this.topLeftY + j * this.m);
+        this.rect.moveTo(0, j * this.cellSize);
+        this.rect.lineTo(this.gridSize, j * this.cellSize);
       }   
       
     }
