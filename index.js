@@ -48,30 +48,9 @@ function boot() {
 
   document.body.appendChild(app.view);
 
-  const grid = new Grid(100, 100, 7, CELL_SIZE);
+  const control = new LevelController(LEVEL, app.stage);
 
-  app.stage.addChild(grid);
+  control.loadLevel();
 
-
-  const grid2 = new Grid(500, 100, 7, CELL_SIZE);
-
-  app.stage.addChild(grid2);
-
-  const control = new LevelController(LEVEL);
-
-  levelLoading();
-
-  function levelLoading(){
-
-    control.currentLevel().forEach((levelElement) => {
-
-      const x = grid2.x + levelElement.i * CELL_SIZE;
-      const y = grid2.y + levelElement.j * CELL_SIZE;
-  
-      const element = ELEMENTS_FACTORY[levelElement.type](x, y, false);
-  
-      app.stage.addChild(element);
-    });
-    
-  }
+  //control.clearLevel();
 }
