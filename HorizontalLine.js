@@ -8,10 +8,10 @@ class HorizontalLine extends PIXI.Graphics {
       this.interactive = interactive;
       this.cursor = 'pointer'; 
       this.hitArea = new PIXI.Rectangle(0, 0, CELL_SIZE, 5)
-
+      /* 
       this.on('pointermove', function (e) {
         console.log('HorizontalLine');
-      });
+      }); */
       
       this.draw();
     }

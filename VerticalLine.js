@@ -8,10 +8,10 @@ class VerticalLine extends PIXI.Graphics {
       this.interactive = interactive;
       this.cursor = 'pointer'; 
       this.hitArea = new PIXI.Rectangle(0, 0, 5, CELL_SIZE)
-
+      /* 
       this.on('pointermove', function (e) {
         console.log('VerticalLine');
-      });
+      }); */
       
       this.draw();
     }

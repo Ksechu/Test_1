@@ -8,10 +8,10 @@ class Circle extends PIXI.Graphics {
       this.interactive = interactive;
       this.cursor = 'pointer'; 
       this.hitArea = new PIXI.Circle(0, 0, 10)
-
+      /* 
       this.on('pointermove', function (e) {
         console.log('Circle');
-      });
+      }); */
       
       this.draw();
     }

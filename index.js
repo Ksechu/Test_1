@@ -1,11 +1,4 @@
-const GREEN = 0x00FF00;
-const WHITE = 0xFFFFFF;
-const BLUE  = 0x0000FF;
-const GREY  = 0xFFF8DC;
-const BLACK = 0x000000;
-const CELL_SIZE = 50, WIDTH = 1024, HEIGHT = 720;
-
-const LEVEL = [
+const LEVELS = [
   [
     { i: 2, j: 4, type: 0 },
     { i: 2, j: 3, type: 2 },
@@ -32,12 +25,6 @@ const LEVEL = [
   ]
 ];
 
-const ELEMENTS_FACTORY = [
-  (x, y, interactive) => new HorizontalLine(x, y, interactive),
-  (x, y, interactive) => new VerticalLine(x, y, interactive),
-  (x, y, interactive) => new Circle(x, y, interactive),
-];
-
 function boot() {
   const app = new PIXI.Application({
     width: WIDTH,
@@ -48,7 +35,10 @@ function boot() {
 
   document.body.appendChild(app.view);
 
-  const control = new LevelController(LEVEL, app.stage);
+  app.stage.interactive = true;
+  app.stage.hirArea = app.screen;
+
+  const control = new LevelController(LEVELS, app.stage);
 
   control.loadLevel();
 
