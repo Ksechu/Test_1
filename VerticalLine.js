@@ -3,11 +3,14 @@ class VerticalLine extends PIXI.Graphics {
       super();
 
       this.x = x;
-      this.y = y;      
+      this.y = y; 
+      
+      this.type = 1;
 
       this.interactive = interactive;
       this.cursor = 'pointer'; 
-      this.hitArea = new PIXI.Rectangle(0, 0, 5, CELL_SIZE)
+      this.hitArea = new PIXI.Rectangle(-7, 0, 14, CELL_SIZE);
+
       /* 
       this.on('pointermove', function (e) {
         console.log('VerticalLine');
@@ -17,7 +20,7 @@ class VerticalLine extends PIXI.Graphics {
     }
 
     draw() {
-      this.lineStyle(5, BLACK, 1);
+      this.lineStyle(7, BLACK, 1);
 
       this.moveTo(0, 0);
       this.lineTo(0, CELL_SIZE);

@@ -18,6 +18,7 @@ class LevelController {
       this.stage = stage;
       this.n = 0;
       this.elements = [];
+      this.count = 0;
 
       this.dragFn = () => {};
 
@@ -36,7 +37,8 @@ class LevelController {
     }
 
     loadLevel() { 
-        this.clearLevel();       
+        this.clearLevel();
+        this.count = this.arrayLevel[this.n].length;       
 
         this.arrayLevel[this.n].forEach((levelElement) => {
 
@@ -45,50 +47,84 @@ class LevelController {
         
             const element = ELEMENTS_FACTORY[levelElement.type](x, y, false);
         
+            const interactiveElement = ELEMENTS_FACTORY[levelElement.type]((levelElement.type * 2 * CELL_SIZE) + this.sampleGrid.gridSize, 550, true);
+
             this.stage.addChild(element);
             this.elements.push(element);
-        });
+            this.elements.push(interactiveElement);
+        
 
-        const element = ELEMENTS_FACTORY[2](400,550,true);
-
-        element.on('pointerdown', () => {
+        interactiveElement.on('pointerdown', () => {
             this.dragFn = (event) => {
               const pos = this.stage.toLocal(event.global);
-              element.position.set(pos.x, pos.y);
+              interactiveElement.position.set(pos.x, pos.y);
             }
       
             this.stage.on('pointermove', this.dragFn);
           });
       
-        element.on('pointerup', () => {
-            let sX = 400, sY = 550;
+          interactiveElement.on('pointerup', () => {
             
-            this.arrayLevel[this.n].forEach((levelElement) => {
+          this.arrayLevel[this.n].some((levelElement) => {
 
-                const x = this.workGrid.x + levelElement.i * CELL_SIZE;
-                const y = this.workGrid.y + levelElement.j * CELL_SIZE;
+                const x = this.workGrid.x + levelElement.i * this.workGrid.cellSize;
+                const y = this.workGrid.y + levelElement.j * this.workGrid.cellSize;
             
-                if (((element.x >= (x - (CELL_SIZE / 2))) && (element.x <= (x + (CELL_SIZE / 2))))
-                 && ((element.y >= (y - (CELL_SIZE / 2))) && (element.y <= (y + (CELL_SIZE / 2))))) {    
-                    sX = x;
-                    sY = y;                                  
-                }                
-            });
+                if (((interactiveElement.x >= (x - (this.workGrid.cellSize / 2))) && (interactiveElement.x <= (x + (this.workGrid.cellSize / 2))))
+                 && ((interactiveElement.y >= (y - (this.workGrid.cellSize / 2))) && (interactiveElement.y <= (y + (this.workGrid.cellSize / 2))))
+                 && (interactiveElement.type == levelElement.type)) {
+                  interactiveElement.position.set(x, y);
+                  interactiveElement.interactive = false;
+                  this.count--;
+                  return true;                              
+                }            
+            });            
             
-            element.position.set(sX, sY);            
-            
+            if (interactiveElement.interactive){
+              interactiveElement.position.set((levelElement.type * 2 * CELL_SIZE) + this.sampleGrid.gridSize, 550);
+            }
+
+            if (this.count == 0) {
+              this.next();
+            }
           });
     
-        element.on('pointerupoutside', () => {
-            console.log('up');
+          interactiveElement.on('pointerupoutside', () => {
+            
+            this.arrayLevel[this.n].some((levelElement) => {
+
+              const x = this.workGrid.x + levelElement.i * this.workGrid.cellSize;
+              const y = this.workGrid.y + levelElement.j * this.workGrid.cellSize;
+          
+              if (((interactiveElement.x >= (x - (this.workGrid.cellSize / 2))) && (interactiveElement.x <= (x + (this.workGrid.cellSize / 2))))
+               && ((interactiveElement.y >= (y - (this.workGrid.cellSize / 2))) && (interactiveElement.y <= (y + (this.workGrid.cellSize / 2))))
+               && (interactiveElement.type == levelElement.type)) {
+                interactiveElement.position.set(x, y);
+                interactiveElement.interactive = false;
+                this.count--;
+                return true;                              
+              }            
+          });            
+          
+          if (interactiveElement.interactive){
+            interactiveElement.position.set((levelElement.type * 2 * CELL_SIZE) + this.sampleGrid.gridSize, 550);
+          }
+
+          if (this.count == 0) {
+            this.next();
+          }
           });
 
-        this.stage.addChild(element);
+        this.stage.addChild(interactiveElement);
+
+      });
     }
 
     next() {
         this.n++;
         if (this.n < this.arrayLevel.length){
+            console.log('Next level');
+            this.loadLevel();
             return true; 
         }            
         else {            
